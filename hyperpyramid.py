@@ -6,14 +6,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import tkinter as tk
-import tkinter.font as tkf
+from tkinter import font as tkf
 
 
 """ ---------------------------- Globals --------------------------- """
 
 
-font = tkf.Font(font='courier', size=12)
-pixels_per_char = font.measure("w")
+root = tk.Tk()
+
+# Get screen characteristics. N.B. This assumes single monitor.
+width_px = root.winfo_screenwidth()
+height_px = root.winfo_screenheight()
+width_in = root.winfo_screenmmwidth() / 25.4
+height_in = root.winfo_screenmmheight() / 25.4
+# 2.54 cm = in
+width_dpi = width_px/width_in
+height_dpi = height_px/height_in
+
+print('Width: %i px, Height: %i px' % (width_px, height_px))
+print('Width: %f in, Height: %f in' % (width_in, height_in))
+print('Width: %f dpi, Height: %f dpi' % (width_dpi, height_dpi))
+my_font = tkf.Font(font='monospace', size=12)
+
+# Pixel width and height of a character in the fixed-width font courier.
+# Note that two chars gives you exactly twice what one char is.
+pixel_width_per_char = my_font.measure("w")
+pixel_height_per_char = my_font.metrics("linespace")
+
+# Figure size in inches
+figure_size = (10, 6)
 
 
 """ -------------------------- Node class -------------------------- """
@@ -21,6 +42,8 @@ pixels_per_char = font.measure("w")
 
 class PascalTriangleNode:
 
+    row = 1
+    row_position = 1
     binomial_coefficient = 1
     number_of_digits = 1
     x_coordinate = 0
@@ -33,40 +56,47 @@ class PascalTriangleNode:
         :param k:
         """
 
-        global binomial_coefficient
-        global number_of_digits
-
         # Clean inputs:
         n = int(n)
         k = int(k)
+        # print('n = ' + str(n))
+        # print('k = ' + str(k))
+
+        # Assign row number and row position.
+        self.row = n
+        self.row_position = k
 
         # Take care of special cases to save compute time. Default:
-        binomial_coefficient = 1
+        self.binomial_coefficient = 1
 
         # There are n ways to choose 1 or n-1 objects.
         if 1 == k or (n-1) == k:
-            binomial_coefficient = n
+            self.binomial_coefficient = n
+            # print("Case 1: binomial coefficient = "
+            #       + str(binomial_coefficient))
 
         # These are impossible, so let the coefficient be zero.
         elif k > n or 0 > n or 0 > k:
-            binomial_coefficient = 0
+            self.binomial_coefficient = 0
+            # print("Case 2: binomial coefficient = "
+            #       + str(binomial_coefficient))
 
         # The main case: we have n!/(k!(n-k)!).
         else:
             a = math.factorial(n)
             b = math.factorial(k)
             c = math.factorial(n-k)
-            binomial_coefficient = a // (b * c)
+            self.binomial_coefficient = a // (b * c)
+            # print("Case 3: binomial coefficient = "
+            #       + str(binomial_coefficient))
 
-        number_of_digits = len(str(abs(binomial_coefficient)))
+        self.number_of_digits = len(str(self.binomial_coefficient))
 
     def __str__(self) -> str:
         """
         How to pretty-print this node.
         :return:
         """
-
-        global binomial_coefficient
 
         return str(self.binomial_coefficient)
 
@@ -76,7 +106,25 @@ class PascalTriangleNode:
         :return: Width of binomial coefficient in pixels.
         """
 
-        global pixels_per_char
-        global number_of_digits
+        global pixel_width_per_char
 
-        return number_of_digits * pixels_per_char
+        return self.number_of_digits * pixel_width_per_char
+
+    def compute_coordinates(self) -> None:
+        """
+        This function computes the x and y coordinates based on
+        pixel width and pixel height of characters, and the level of
+        the row.
+        :return:
+        """
+
+        self.x_coordinate = 1
+        self.y_coordinate = 1
+
+nodes = []
+
+for i in range(11):
+    nodes.append(PascalTriangleNode(10, i))
+
+for node in nodes:
+    print(str(node))
