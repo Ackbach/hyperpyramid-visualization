@@ -103,7 +103,6 @@ class PascalTriangleNode:
     row_position = 1
     binomial_coefficient = 1
     number_of_digits = 1
-    max_number_of_digits = 1
     x_coordinate = 0
     y_coordinate = 0
 
@@ -130,17 +129,18 @@ class PascalTriangleNode:
         self.binomial_coefficient = n_choose_k(n, k)
         self.number_of_digits = len(str(self.binomial_coefficient))
 
-        # The max string size for this row occurs in the middle:
-        self.max_number_of_digits = len(str(n_choose_k(n, n // 2)))
-
 
     def __str__(self) -> str:
         """
         How to pretty-print this node. Our goal here is to center-
-        justify based on the maximum width number in this row.
+        justify based on the maximum width number in this row. This will
+        have to be done outside the class, though, because it depends
+        on the max width of the max row.
         :return:
         """
 
+        # Old code.
+        """
         if self.number_of_digits // 2 == self.max_number_of_digits // 2:
             # Same parity. We can center exactly.
             # number_of_spaces is divisible by 2.
@@ -158,6 +158,9 @@ class PascalTriangleNode:
             right_spaces = " " * ((number_of_spaces // 2) + 1)
             return left_spaces + str(self.binomial_coefficient) + \
                 right_spaces
+        """
+
+        return str(self.binomial_coefficient)
 
 
     def compute_width(self) -> list:
@@ -187,7 +190,9 @@ class PascalTriangleNode:
         self.y_coordinate = 1
 
 
-row_number = 50
+row_number = 10
+max_width_chars = len(str(n_choose_k(row_number, row_number // 2)))
+max_row_width_chars = (row_number + 1) * max_width_chars
 
 # A list comprehension is more Pythonic.
 nodes = [PascalTriangleNode(row_number, i)
