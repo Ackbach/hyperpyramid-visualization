@@ -1,0 +1,2 @@
+Laptop: 1366 x 768 (pixels)		13.5625 x 7.625 (inches)  (dpi = 100.7)
+Monitor: 1600 x 900 (pixels) 	17.375 x 9.8125 (inches)  (dpi = 92)
