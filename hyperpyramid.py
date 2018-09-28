@@ -9,43 +9,6 @@ import tkinter as tk
 from tkinter import font as tkf
 
 
-""" ---------------------------- Globals --------------------------- """
-
-
-root = tk.Tk()
-
-# Get screen characteristics. N.B. This assumes single monitor.
-width_px = root.winfo_screenwidth()
-height_px = root.winfo_screenheight()
-
-# 25.4 mm = 1 in
-width_in = root.winfo_screenmmwidth() / 25.4
-height_in = root.winfo_screenmmheight() / 25.4
-
-# Calculate dpi's (ratios):
-width_dpi = width_px/width_in
-height_dpi = height_px/height_in
-
-print('Screen width: %i px, Screen height: %i px' %
-      (width_px, height_px))
-print('Screen width: %f in, Screen height: %f in' %
-      (width_in, height_in))
-print('Screen ratio for width: %f dpi, Screen ratio for height: %f dpi'
-      % (width_dpi, height_dpi))
-
-# Pixel width and height of a character in the fixed-width font courier.
-# Note that two chars gives you exactly twice what one char is.
-my_font = tkf.Font(font='monospace', size=20)
-pixel_width_per_char = my_font.measure("w")
-pixel_height_per_char = my_font.metrics("linespace")
-
-print('Pixel width per character: %f px, Pixel height per character: %f px'
-      % (pixel_width_per_char, pixel_height_per_char))
-
-# Figure size in inches
-figure_size = (10, 6)
-
-
 """ -------------------------- Factorials -------------------------- """
 
 
@@ -92,6 +55,83 @@ def n_choose_k(n: int, k: int) -> int:
     return total_ways
 
 
+""" ----------------- Globals and Units Conversion ----------------- """
+
+
+root = tk.Tk()
+
+# Get screen characteristics. N.B. This assumes single monitor.
+width_px = root.winfo_screenwidth()
+height_px = root.winfo_screenheight()
+
+# 25.4 mm = 1 in
+width_in = root.winfo_screenmmwidth() / 25.4
+height_in = root.winfo_screenmmheight() / 25.4
+
+# Calculate dpi's (ratios):
+width_dpi = width_px/width_in
+height_dpi = height_px/height_in
+
+print('Screen width: %i px, Screen height: %i px' %
+      (width_px, height_px))
+print('Screen width: %f in, Screen height: %f in' %
+      (width_in, height_in))
+print('Screen ratio for width: %f dpi, Screen ratio for height: %f dpi'
+      % (width_dpi, height_dpi))
+
+# Pixel width and height of a character in the fixed-width font courier.
+# Note that two chars gives you exactly twice what one char is.
+my_font = tkf.Font(font='monospace', size=20)
+pixel_width_per_char = my_font.measure("w")
+pixel_height_per_char = my_font.metrics("linespace")
+
+print('Pixel width per character: %f px, Pixel height per character: %f px'
+      % (pixel_width_per_char, pixel_height_per_char))
+
+# Figure size in inches
+figure_size = (10, 6)
+
+# This we would input from the user, generally.
+row_number = 10
+
+
+def x_chars_to_xu(x_chars: float) -> float:
+    """
+    This function takes in a number of characters, and returns the
+    width of those characters in x data units of the graph. x_chars
+    could be fractional, hence the float type.
+    :param x_chars:
+    :return:
+    """
+
+    # These are the conversion rates from outside, just calculated.
+    global pixel_width_per_char
+    global width_dpi
+    global figure_size
+
+    return ((x_chars*pixel_width_per_char)/width_dpi)/figure_size[0]
+
+
+# The following parameters determine the maximum width in x units
+# for the biggest number in the lowest row. xu refers to x direction
+# data units in the graph, needed for the .text function.
+max_width_chars = len(str(n_choose_k(row_number, row_number // 2)))
+max_width_xu = x_chars_to_xu(max_width_chars)
+
+# The following parameters assume one space between numbers
+# horizontally: take half from one number, half from the next, and
+# add one, to get the horizontal spacing between numbers.
+num_x_space_char = max_width_chars + 1
+num_x_space_xu = x_chars_to_xu(num_x_space_char)
+
+# Similarly to the above, find the vertical spacing between numbers.
+# Assume baselines are 1.5 times character height.
+# yu refers to y direction data units, needed for the .text function.
+num_y_space_char = 1.5
+num_y_space_yu = ((num_y_space_char * pixel_height_per_char) /
+                  height_dpi) / figure_size[1]
+
+
 """ -------------------------- Node class -------------------------- """
 
 
@@ -103,6 +143,7 @@ class PascalTriangleNode:
     row_position = 1
     binomial_coefficient = 1
     number_of_digits = 1
+    number_of_digits_xu = 0.01
     x_coordinate = 0
     y_coordinate = 0
 
@@ -128,6 +169,13 @@ class PascalTriangleNode:
         # Take care of special cases to save compute time. Default:
         self.binomial_coefficient = n_choose_k(n, k)
         self.number_of_digits = len(str(self.binomial_coefficient))
+
+        # Intermediate calculations we don't care about.
+        num_digits_px = self.number_of_digits * pixel_width_per_char
+        num_digits_in = num_digits_px / width_dpi
+
+        # This is important for calculating position in data units.
+        self.number_of_digits_xu = num_digits_in / figure_size[0]
 
 
     def __str__(self) -> str:
@@ -163,21 +211,6 @@ class PascalTriangleNode:
         return str(self.binomial_coefficient)
 
 
-    def compute_width(self) -> list:
-        """
-        This function computes the width of the
-        current coefficient in pixels, and the width of the maximum
-        coefficient (near the middle) in pixels.
-        :return: list containing this node's width, and the max node's
-        width (in that order).
-        """
-
-        global pixel_width_per_char
-
-        return [self.number_of_digits * pixel_width_per_char,
-                self.max_number_of_digits * pixel_width_per_char]
-
-
     def compute_coordinates(self) -> None:
         """
         This function computes the x and y coordinates based on
@@ -186,13 +219,22 @@ class PascalTriangleNode:
         :return:
         """
 
-        self.x_coordinate = 1
-        self.y_coordinate = 1
+        # Units are in chars.
+        x_central_offset_chars = (self.row_position - self.row / 2) * \
+            num_x_space_char
 
+        # For the .text function, we need the lower left coordinate.
+        # Subtract half the width of this number. Convert to x units.
+        x_left_offset_chars = x_central_offset_chars - \
+            self.number_of_digits / 2
+        x_left_offset_xu = x_chars_to_xu(x_left_offset_chars)
 
-row_number = 10
-max_width_chars = len(str(n_choose_k(row_number, row_number // 2)))
-max_row_width_chars = (row_number + 1) * max_width_chars
+        # Start at x = 0.5, and subtract the offset in xu.
+        self.x_coordinate = 0.5 - x_left_offset_xu
+
+        # The y coordinate is way easier.
+        self.y_coordinate = 1 - (self.row + 1) * num_y_space_yu
+
 
 # A list comprehension is more Pythonic.
 nodes = [PascalTriangleNode(row_number, i)
