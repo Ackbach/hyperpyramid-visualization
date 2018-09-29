@@ -6,6 +6,7 @@ sv = tk.StringVar()
 
 def callback():
     print(sv.get())
+    sv.set('Set Text.')
     return True
 
 

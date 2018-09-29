@@ -11,7 +11,6 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends.backend_tkagg import NavigationToolbar2TkAgg
 # implement the default mpl key bindings
-from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 
 
@@ -244,31 +243,32 @@ def recompute_triangle():
             # Units are in chars.
             x_central_offset_chars = (self.row_position - self.row / 2) * \
                 num_x_space_char
-            if debug_flag:
-                print("x central offset in chars: " +
-                      str(x_central_offset_chars))
+            # if debug_flag:
+            #     print("x central offset in chars: " +
+            #           str(x_central_offset_chars))
 
             # For the .text function, we need the lower left coordinate.
             # Subtract half the width of this number. Convert to x units.
             x_left_offset_chars = x_central_offset_chars + \
                 self.number_of_digits / 2
-            if debug_flag:
-                print(str(x_left_offset_chars))
+            # if debug_flag:
+            #     print(str(x_left_offset_chars))
             x_left_offset_xu = x_chars_to_xu(x_left_offset_chars)
-            if debug_flag:
-                print(str(x_left_offset_xu))
+            # if debug_flag:
+            #     print(str(x_left_offset_xu))
 
             # Start at x = 0.5, and subtract the offset in xu.
             self.x_coordinate = 0.5 - x_left_offset_xu
 
             # The y coordinate is way easier.
             self.y_coordinate = 1 - (self.row + 1) * num_y_space_yu
-
+    """
     if debug_flag:
         debug_number = 16
         debug_node = PascalTriangleNode(debug_number, debug_number // 2)
         print(str(debug_node.x_coordinate))
         print(str(debug_node))
+    """
 
     # A list comprehension is more Pythonic.
     nodes = [[PascalTriangleNode(row, i)
@@ -278,6 +278,9 @@ def recompute_triangle():
     # for list_of_nodes in nodes:
     #     for node in list_of_nodes:
     #         print(str(node))
+
+    # Clear the previous graph, if any.
+    a.clear()
 
     colors = ['brown', 'green', 'blue', 'black']
 
@@ -296,7 +299,6 @@ def recompute_triangle():
     """
 
     # a tk.DrawingArea
-    # a.clear()
     # a tk.DrawingArea
     canvas.draw()
     toolbar.update()
@@ -320,6 +322,9 @@ def _update_number_rows() -> bool:
     global sv
     global debug_flag
 
+    if debug_flag:
+        print("Calling _update_number_rows.")
+
     try:
         text = sv.get()
         if debug_flag:
@@ -329,8 +334,10 @@ def _update_number_rows() -> bool:
             print(int_value)
         if int_value > 18:
             int_value = 18
+            sv.set(str(int_value))
         if int_value < 0:
             int_value = 0
+            sv.set(str(int_value))
         row_number = int_value
         recompute_triangle()
         # Validate command has to return True if it's a good value,
@@ -343,11 +350,11 @@ def _update_number_rows() -> bool:
         return False
 
 
-e = tk.Entry(root, textvariable=sv, validate="focusout",
-             validatecommand=_update_number_rows)
-e.pack()
-e = tk.Entry(root)
-e.pack()
+e1 = tk.Entry(root, textvariable=sv, validate="focusout",
+              validatecommand=_update_number_rows)
+e1.pack()
+e2 = tk.Entry(root)
+e2.pack()
 button = tk.Button(master=root, text='Quit', command=_quit)
 button.pack()
 
