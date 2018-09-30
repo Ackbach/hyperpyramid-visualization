@@ -15,10 +15,11 @@
     <session id="2079517644">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -36,12 +37,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="28" />
-          <entry key="py" value="4459" />
+          <entry key="py" value="4742" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="4487" />
+          <entry key="Python" value="4770" />
         </counts>
       </usages-collector>
     </session>
@@ -51,32 +52,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_embedding.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="61" lean-forward="true" selection-start-line="13" selection-end-line="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hyperpyramid.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1223">
-              <caret line="247" column="14" selection-start-line="247" selection-start-column="14" selection-end-line="247" selection-end-column="14" />
-              <folding>
-                <element signature="e#132#152#0" expanded="true" />
-                <marker date="1538248932717" expanded="true" signature="3386:4641" ph="..." />
-                <marker date="1538248932717" expanded="true" signature="4458:4641" ph="..." />
-                <marker date="1538248932717" expanded="true" signature="9734:10732" ph="..." />
-              </folding>
+            <state relative-caret-position="976">
+              <caret line="61" selection-start-line="13" selection-end-line="61" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hyperpyramid.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="367" column="13" selection-start-line="367" selection-start-column="13" selection-end-line="367" selection-end-column="13" />
+              <folding>
+                <element signature="e#132#152#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_entry_callback.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="192">
+              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -105,15 +103,16 @@
       <list>
         <option value="$PROJECT_DIR$/test_font.py" />
         <option value="$PROJECT_DIR$/test_embedding.py" />
-        <option value="$PROJECT_DIR$/hyperpyramid.py" />
         <option value="$PROJECT_DIR$/test_entry_callback.py" />
+        <option value="$PROJECT_DIR$/hyperpyramid.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1363" />
-    <option name="width" value="1606" />
-    <option name="height" value="903" />
+    <option name="x" value="-290" />
+    <option name="y" value="46" />
+    <option name="width" value="1602" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -160,7 +159,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_entry_callback">
+  <component name="RunManager" selected="Python.hyperpyramid">
     <configuration name="hyperpyramid" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hyperpyramid-visualization" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -253,8 +252,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test_entry_callback" />
         <item itemvalue="Python.hyperpyramid" />
+        <item itemvalue="Python.test_entry_callback" />
         <item itemvalue="Python.test_embedding" />
         <item itemvalue="Python.test_font" />
       </list>
@@ -282,15 +281,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1363" y="0" width="1606" height="903" extended-state="6" />
+    <frame x="-3" y="0" width="1372" height="738" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20862398" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24497394" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32862645" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.41530946" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -324,28 +323,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test_embedding.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="61" lean-forward="true" selection-start-line="13" selection-end-line="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hyperpyramid.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1223">
-          <caret line="247" column="14" selection-start-line="247" selection-start-column="14" selection-end-line="247" selection-end-column="14" />
-          <folding>
-            <element signature="e#132#152#0" expanded="true" />
-            <marker date="1538248932717" expanded="true" signature="3386:4641" ph="..." />
-            <marker date="1538248932717" expanded="true" signature="4458:4641" ph="..." />
-            <marker date="1538248932717" expanded="true" signature="9734:10732" ph="..." />
-          </folding>
+        <state relative-caret-position="976">
+          <caret line="61" selection-start-line="13" selection-end-line="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_entry_callback.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="192">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hyperpyramid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="367" column="13" selection-start-line="367" selection-start-column="13" selection-end-line="367" selection-end-column="13" />
+          <folding>
+            <element signature="e#132#152#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
