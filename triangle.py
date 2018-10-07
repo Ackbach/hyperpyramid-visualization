@@ -1,3 +1,6 @@
+# For my wife, Susan Garrison Keister. You inspire me, you help me,
+# and you help my walk with the Lord. I love you!
+
 # -*- coding: utf-8 -*-
 
 # Some important numerical libraries we'll need. Might need scipy, we'll
@@ -12,6 +15,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends.backend_tkagg import NavigationToolbar2TkAgg
 # implement the default mpl key bindings
 from matplotlib.figure import Figure
+import sys
 
 
 """ -------------------------- Factorials -------------------------- """
@@ -70,6 +74,9 @@ root.wm_title("Embedding in TK")
 debug_flag = True
 # debug_flag = False
 
+# Force update idle tasks to run, to see if it fixes our geometry prob:
+root.update_idletasks()
+
 # Get screen characteristics. N.B. This assumes single monitor.
 width_px = root.winfo_screenwidth()
 height_px = root.winfo_screenheight()
@@ -77,6 +84,19 @@ height_px = root.winfo_screenheight()
 # 25.4 mm = 1 in
 width_in = root.winfo_screenmmwidth() / 25.4
 height_in = root.winfo_screenmmheight() / 25.4
+
+print('Uncorrected screen width (in):' + str(width_in))
+print('Uncorrected screen height (in):' + str(height_in))
+
+# If on Windows, scale by correction factors.
+# These are, unfortunately, experimentally determined. I have not been
+# able to figure out the winfo_screenmmwidth and winfo_screenmmheight
+# functions are so incorrect in their reported values, but they are.
+if sys.platform.startswith('win'):
+    width_correction_factor = 1.481
+    height_correction_factor = 1.58
+    width_in = width_in / width_correction_factor
+    height_in = height_in / height_correction_factor
 
 # Calculate dpi's (ratios):
 width_dpi = width_px/width_in
@@ -102,7 +122,7 @@ print('Pixel width per character: %f px, Pixel height per character: %f px'
 figure_size = (13, 6)
 
 f = Figure()
-f.set_dpi(96)
+f.set_dpi(width_dpi)
 f.set_size_inches(figure_size[0], figure_size[1])
 
 # a.text could add text to the figure.
