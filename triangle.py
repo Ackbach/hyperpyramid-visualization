@@ -12,7 +12,7 @@ from tkinter import font as tkf
 import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.backends.backend_tkagg import NavigationToolbar2TkAgg
+from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
 # implement the default mpl key bindings
 from matplotlib.figure import Figure
 import sys
@@ -164,7 +164,7 @@ canvas = FigureCanvasTkAgg(f, master=root)
 canvas.draw()
 canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-toolbar = NavigationToolbar2TkAgg(canvas, root)
+toolbar = NavigationToolbar2Tk(canvas, root)
 toolbar.update()
 canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 # canvas.bind("<1>", lambda event: canvas.focus_set())
